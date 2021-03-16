@@ -5,8 +5,8 @@ from weatherbot.items import WeatherbotItem
 class WeatherbotsSpider(scrapy.Spider):
     name = 'weatherbot'
     custom_settings = {'JOBDIR': 'crawl_weatherbots1'}
-    allowed_domains = ['yahoo.com/news/weather/south-korea/seoul/seoul-1132599/']
-    start_urls = ['https://www.yahoo.com/news/weather/south-korea/seoul/seoul-1132599/']
+    allowed_domains = ['yahoo.com/news/weather/south-korea/seoul/seoul-1132599/','yahoo.com/news/weather/united-states/new-york/new-york-2459115','yahoo.com/news/weather/japan/tokyo-prefecture/tokyo-1118370','yahoo.com/news/weather/france/%C3%AEle-de-france/paris-615702','yahoo.com/news/weather/united-states/california/los-angeles-2442047']
+    start_urls = ['https://www.yahoo.com/news/weather/south-korea/seoul/seoul-1132599/', 'https://www.yahoo.com/news/weather/united-states/new-york/new-york-2459115','https://www.yahoo.com/news/weather/japan/tokyo-prefecture/tokyo-1118370','https://www.yahoo.com/news/weather/france/%C3%AEle-de-france/paris-615702','https://www.yahoo.com/news/weather/united-states/california/los-angeles-2442047']
 
     def parse(self, response):
         temperature = response.xpath('//*[@id="Lead-1-WeatherLocationAndTemperature"]/div/section[2]/div/div[3]/span[1]/text()').extract()
