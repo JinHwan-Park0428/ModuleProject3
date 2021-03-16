@@ -14,7 +14,6 @@ class Mdproject3:
         self.cursor = self.connectdb.cursor()
         # self.barchart()
         self.per_5m_linechart()
-        self.per_box
         self.cursor.close()
         self.connectdb.close()
 
@@ -27,12 +26,16 @@ class Mdproject3:
     def time_hour(self, x):
         return x.split(' ')[1].split(".")[0].split(":")[0]
 
+    def time_day(self, x):
+        return x.split(' ')[0].split("-")[2]
+
     def save_data(self):
         show_db = '''SELECT * FROM my_project_stock'''
         self.cursor.execute(show_db)
         data = self.cursor.fetchall()
         pddata = pd.DataFrame(data, columns=["quantity", "price", "days_range", "title", "open_price", "ratio", "search_time"])
         pddata["search_time"] = pddata["search_time"].map(lambda x: self.newtime(x))
+        pddata["time_day"] = pddata["search_time"].map(lambda x: self.time_day(x))
         pddata["time_hour"] = pddata["search_time"].map(lambda x: self.time_hour(x))
         pddata["time_minute"] = pddata["search_time"].map(lambda x: self.time_minute(x))
 
@@ -61,55 +64,34 @@ class Mdproject3:
         plt.savefig('bar_plot.png', dpi=400, bbox_inches='tight')
         plt.show()
 
-#     def per_5m_linechart(self):
-#         df = self.save_data()
-#         hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
-
-#         for i in hours:
-#             ndata = df[df["time_hour"] == i]
-#             if len(ndata) != 0:
-#                 fig = plt.figure()
-#                 ax1 = fig.add_subplot(1, 1, 1)
-#                 ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
-#                 plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
-#                 ax1.xaxis.set_ticks_position('bottom')
-#                 ax1.yaxis.set_ticks_position('left')
-
-#                 ax1.set_title("Data per 5min for {}O'clock BTC Price".format(i))
-#                 plt.xlabel('minutes')
-#                 plt.ylabel('price')
-#                 # plt.legend(loc='best')
-
-#                 plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
-#                 plt    def per_5m_linechart(self):
+    def per_5m_linechart(self):
         df = self.save_data()
+        hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+        days = []
+        for i in df["time_day"]:
+            days.append(i)
+        days = list(set(days))
+        print(days)
+        for j in days:
+            for i in hours:
+                ndata = df[(df["time_hour"] == i) & (df["time_day"] == j)]
+                ndata = ndata.reset_index()
+                if len(ndata) != 0:
+                    fig = plt.figure()
+                    ax1 = fig.add_subplot(1, 1, 1)
+                    ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
+                    plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
+                    ax1.xaxis.set_ticks_position('bottom')
+                    ax1.yaxis.set_ticks_position('left')
 
-        set_data = set([])          
-        for i in df['time_hour']:           #hours 를 입력하는 대신 DF의 hours column에서 집합형식으로 데이터를 받아와줌
-            set_data.add(i)
-            
-        for i in set_data:
-            ndata = df[df["time_hour"] == i]
-            fig = plt.figure()
-            ax1 = fig.add_subplot(1, 1, 1)
-            ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
-            plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
-            ax1.xaxis.set_ticks_position('bottom')
-            ax1.yaxis.set_ticks_position('left')
+                    ax1.set_title("{0}th {1}hour BTC Price".format(j, i))
+                    plt.xlabel('minutes')
+                    plt.ylabel('price')
+                    # plt.legend(loc='best')
 
-            ax1.set_title("Data per 5min for {}O'clock BTC Price".format(i))
-            plt.xlabel('minutes')
-            plt.ylabel('price')
-            # plt.legend(loc='best')
+                    plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
+                    plt.show()
 
-            plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
-            plt.show().show()
-
-    def per_5m_boxplot(self):
-        df = self.save_data()
-
-        df.boxplot(column = 'price',by='time_hour')
-        plt.show()
 
 if __name__ == '__main__':
     Mdproject3()

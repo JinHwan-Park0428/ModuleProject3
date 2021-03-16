@@ -63,7 +63,6 @@ class Mdproject3:
 
     def per_5m_linechart(self):
         df = self.save_data()
-        print(df)
 
         set_data = set([])
         for i in df['time_hour']:
@@ -71,7 +70,6 @@ class Mdproject3:
 
         set_data = list(set_data)
         set_data.sort()
-        print(set_data)
 
         for i in set_data:
             ndata = df[df["time_hour"] == i]
