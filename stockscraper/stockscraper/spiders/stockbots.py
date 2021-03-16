@@ -12,13 +12,16 @@ class StockbotsSpider(scrapy.Spider):
         Price = response.xpath('//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]/text()').extract()        
         days_range = response.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/text()').extract()
         title = response.xpath('//*[@id="quote-header-info"]/div[2]/div[1]/div[1]/h1/text()').extract()
+        ratio = response.xpath('//*[@id="quote-header-info"]/div[3]/div[1]/div/span[2]/text()').extract()
+        open_price = response.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[2]/td[2]/span/text()').extract()
 
-
-        for row in zip(Quantity, Price, days_range,  title):
+        for row in zip(Quantity, Price, days_range,  title,ratio, open_price):
             item = StockscraperItem()
             item['Quantity'] = row[0]
             item['Price'] = row[1]
             item['days_range'] = row[2]
-            item['title'] = row[3]                                                
+            item['title'] = row[3]       
+            item['ratio'] = row[4]    
+            item['open_price'] = row[5]                                     
 
             yield item
