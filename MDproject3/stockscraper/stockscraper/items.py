@@ -14,3 +14,5 @@ class StockscraperItem(scrapy.Item):
     Price = scrapy.Field()
     days_range = scrapy.Field()
     Quantity = scrapy.Field()
+#     ratio = scrapy.Field()
+#     open_price = scrapy.Field()
