@@ -15,3 +15,5 @@ class WeatherbotItem(scrapy.Item):
     title = scrapy.Field()
     wind = scrapy.Field()
     weather = scrapy.Field()
+    sun_rise = scrapy.Field()
+    sun_set = scrapy.Field()
