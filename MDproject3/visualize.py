@@ -81,6 +81,7 @@ class Mdproject3:
                     ax1 = fig.add_subplot(1, 1, 1)
                     ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
                     plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
+                    plt.yticks(np.arange(52000, 58000, 1000))
                     ax1.xaxis.set_ticks_position('bottom')
                     ax1.yaxis.set_ticks_position('left')
 
