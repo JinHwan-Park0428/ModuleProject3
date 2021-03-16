@@ -4,8 +4,8 @@ from stockscraper.items import StockscraperItem
 class StockbotsSpider(scrapy.Spider):
     name = 'stockbots'
     custom_settings = {'JOBDIR': 'crawl_my_stock_bots1'}
-    allowed_domains = ['finance.yahoo.com/quote/BTC-USD?p=BTC-USD&.tsrc=fin-srch','finance.yahoo.com/quote/ETH-USD?p=ETH-USD&.tsrc=fin-srch','finance.yahoo.com/quote/%5EXRPLX?p=^XRPLX&.tsrc=fin-srch']
-    start_urls = ['https://finance.yahoo.com/quote/BTC-USD?p=BTC-USD&.tsrc=fin-srch','https://finance.yahoo.com/quote/ETH-USD?p=ETH-USD&.tsrc=fin-srch','https://finance.yahoo.com/quote/%5EXRPLX?p=^XRPLX&.tsrc=fin-srch']
+    allowed_domains = ['finance.yahoo.com/quote/BTC-USD?p=BTC-USD&.tsrc=fin-srch','finance.yahoo.com/quote/ETH-USD?p=ETH-USD&.tsrc=fin-srch','finance.yahoo.com/quote/LTC-USD?p=LTC-USD&.tsrc=fin-srch']
+    start_urls = ['https://finance.yahoo.com/quote/BTC-USD?p=BTC-USD&.tsrc=fin-srch','https://finance.yahoo.com/quote/ETH-USD?p=ETH-USD&.tsrc=fin-srch','https://finance.yahoo.com/quote/LTC-USD?p=LTC-USD&.tsrc=fin-srch']
 
     def parse(self, response):
         Quantity = response.xpath('//*[@id="quote-summary"]/div[2]/table/tbody/tr[4]/td[2]/span/text()').extract()
