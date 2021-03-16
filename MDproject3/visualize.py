@@ -14,6 +14,7 @@ class Mdproject3:
         self.cursor = self.connectdb.cursor()
         # self.barchart()
         self.per_5m_linechart()
+        self.per_box
         self.cursor.close()
         self.connectdb.close()
 
@@ -104,6 +105,11 @@ class Mdproject3:
             plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
             plt.show().show()
 
+    def per_5m_boxplot(self):
+        df = self.save_data()
+
+        df.boxplot(column = 'price',by='time_hour')
+        plt.show()
 
 if __name__ == '__main__':
     Mdproject3()
