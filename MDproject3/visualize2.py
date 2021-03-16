@@ -93,6 +93,7 @@ class Mdproject3:
         df = self.save_data()
 
         df.boxplot(column = 'price',by='time_hour')
+        plt.savefig('box_plot.png', dpi=400, bbox_inches='tight')
         plt.show()
 
 
