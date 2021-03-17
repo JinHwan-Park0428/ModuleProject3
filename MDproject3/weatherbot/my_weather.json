@@ -170,4 +170,22 @@
 ﻿{"temperature": "59", "humidity": "34%", "high_temp": "62", "low_temp": "37", "title": "Seoul", "wind": "8 mph", "weather": "Cloudy"}
 ][
 ﻿{"temperature": "59", "humidity": "34%", "high_temp": "62", "low_temp": "37", "title": "Seoul", "wind": "8 mph", "weather": "Cloudy"}
+][
+﻿{"temperature": "37", "humidity": "62%", "high_temp": "38", "low_temp": "28", "title": "New York", "wind": "7 mph", "weather": "Cloudy", "sun_rise": "7:07 AM", "sun_set": "7:04 PM"},
+﻿{"temperature": "61", "humidity": "38%", "high_temp": "61", "low_temp": "44", "title": "Los Angeles", "wind": "7 mph", "weather": "Sunny", "sun_rise": "7:02 AM", "sun_set": "7:02 PM"},
+﻿{"temperature": "45", "humidity": "73%", "high_temp": "50", "low_temp": "42", "title": "Paris", "wind": "17 mph", "weather": "Breezy", "sun_rise": "6:59 AM", "sun_set": "7:00 PM"},
+﻿{"temperature": "52", "humidity": "48%", "high_temp": "61", "low_temp": "46", "title": "Tokyo", "wind": "15 mph", "weather": "Breezy", "sun_rise": "5:49 AM", "sun_set": "5:51 PM"},
+﻿{"temperature": "43", "humidity": "63%", "high_temp": "63", "low_temp": "32", "title": "Seoul", "wind": "3 mph", "weather": "Sunny", "sun_rise": "6:40 AM", "sun_set": "6:41 PM"}
+][
+﻿{"temperature": "60", "humidity": "38%", "high_temp": "60", "low_temp": "44", "title": "Los Angeles", "wind": "7 mph", "weather": "Sunny", "sun_rise": "7:02 AM", "sun_set": "7:02 PM"},
+﻿{"temperature": "45", "humidity": "73%", "high_temp": "50", "low_temp": "42", "title": "Paris", "wind": "17 mph", "weather": "Breezy", "sun_rise": "6:59 AM", "sun_set": "7:00 PM"},
+﻿{"temperature": "53", "humidity": "48%", "high_temp": "61", "low_temp": "46", "title": "Tokyo", "wind": "15 mph", "weather": "Breezy", "sun_rise": "5:49 AM", "sun_set": "5:51 PM"},
+﻿{"temperature": "37", "humidity": "62%", "high_temp": "38", "low_temp": "28", "title": "New York", "wind": "7 mph", "weather": "Cloudy", "sun_rise": "7:07 AM", "sun_set": "7:04 PM"},
+﻿{"temperature": "44", "humidity": "63%", "high_temp": "63", "low_temp": "32", "title": "Seoul", "wind": "3 mph", "weather": "Sunny", "sun_rise": "6:40 AM", "sun_set": "6:41 PM"}
+][
+﻿{"temperature": "44", "humidity": "63%", "high_temp": "63", "low_temp": "32", "title": "Seoul", "wind": "3 mph", "weather": "Sunny", "sun_rise": "6:40 AM", "sun_set": "6:41 PM"},
+﻿{"temperature": "60", "humidity": "38%", "high_temp": "60", "low_temp": "44", "title": "Los Angeles", "wind": "7 mph", "weather": "Sunny", "sun_rise": "7:02 AM", "sun_set": "7:02 PM"},
+﻿{"temperature": "53", "humidity": "48%", "high_temp": "61", "low_temp": "46", "title": "Tokyo", "wind": "15 mph", "weather": "Breezy", "sun_rise": "5:49 AM", "sun_set": "5:51 PM"},
+﻿{"temperature": "37", "humidity": "62%", "high_temp": "38", "low_temp": "28", "title": "New York", "wind": "7 mph", "weather": "Cloudy", "sun_rise": "7:07 AM", "sun_set": "7:04 PM"},
+﻿{"temperature": "45", "humidity": "73%", "high_temp": "50", "low_temp": "42", "title": "Paris", "wind": "17 mph", "weather": "Breezy", "sun_rise": "6:59 AM", "sun_set": "7:00 PM"}
 ]

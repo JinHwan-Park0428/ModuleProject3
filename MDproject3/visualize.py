@@ -75,12 +75,14 @@ class Mdproject3:
 
         for i in df["time_day"]:
             days.add(i)
-        days = list(days).sort()
+        days = list(days)
+        days.sort()
         print(days)
 
         for i in df["time_hour"]:
             hours.add(i)
-        hours = list(hours).sort()
+        hours = list(hours)
+        hours.sort()
         print(hours)
 
         for i in df["title"]:
