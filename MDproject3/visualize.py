@@ -9,11 +9,16 @@ plt.style.use('ggplot')
 
 class Mdproject3:
     def __init__(self):
-        self.connectdb = pymysql.connect(host='jinhwan-instance.cn73pxf4sggf.us-west-2.rds.amazonaws.com', user='admin', password='1q2w3e4r5t', port=3306, db='mydb',
+        self.connectdb = pymysql.connect(host='jinhwan-instance.cn73pxf4sggf.us-west-2.rds.amazonaws.com',
+                                         user='admin',
+                                         password='1q2w3e4r5t',
+                                         port=3306,
+                                         db='mydb',
                                          charset='utf8')
         self.cursor = self.connectdb.cursor()
         # self.barchart()
-        self.per_5m_linechart()
+        # self.by_stock_price()
+        self.by_stock_ratio()
         self.cursor.close()
         self.connectdb.close()
 
@@ -39,7 +44,6 @@ class Mdproject3:
         pddata["time_hour"] = pddata["search_time"].map(lambda x: self.time_hour(x))
         pddata["time_minute"] = pddata["search_time"].map(lambda x: self.time_minute(x))
 
-        # print(pddata.sort_values("search_time", ascending=True))
         return pddata
 
     def barchart(self):
@@ -64,52 +68,72 @@ class Mdproject3:
         plt.savefig('bar_plot.png', dpi=400, bbox_inches='tight')
         plt.show()
 
-    def per_5m_linechart(self):
+    def by_stock_price(self):
         df = self.save_data()
 
-        # hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
         hours = set()
         days = set()
         stocks = set()
-        print(df)
 
         for i in df["time_day"]:
             days.add(i)
         days = list(days)
         days.sort()
-        print(days)
 
         for i in df["time_hour"]:
             hours.add(i)
         hours = list(hours)
         hours.sort()
-        print(hours)
 
         for i in df["title"]:
             stocks.add(i)
         stocks = list(stocks)
-        print(stocks)
 
-        for j in days:
-            for i in hours:
-                ndata = df[(df["time_hour"] == i) & (df["time_day"] == j)]
-                ndata = ndata.reset_index()
-                if len(ndata) != 0:
-                    fig = plt.figure()
-                    ax1 = fig.add_subplot(1, 1, 1)
-                    ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
-                    plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
-                    plt.yticks(np.arange(52000, 58000, 1000))
-                    ax1.xaxis.set_ticks_position('bottom')
-                    ax1.yaxis.set_ticks_position('left')
+        for k in stocks:
+            for j in days:
+                for i in hours:
+                    ndata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == k)]
+                    ndata = ndata.reset_index()
+                    if len(ndata) != 0:
+                        fig = plt.figure()
+                        ax1 = fig.add_subplot(1, 1, 1)
+                        ax1.plot(ndata["price"], marker=r'o', color=u'blue', linestyle='-', label='Blue Solid')
+                        plt.xticks(range(len(ndata["time_minute"])), ndata["time_minute"], rotation=0, fontsize="large")
+                        # plt.yticks(np.arange(52000, 58000, 1000))
+                        ax1.xaxis.set_ticks_position('bottom')
+                        ax1.yaxis.set_ticks_position('left')
+                        ax1.set_title("{0}th {1}hour {2} Price".format(j, i, k))
+                        plt.xlabel('minutes')
+                        plt.ylabel('price')
+                        # plt.legend(loc='best')
+                        plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
+                        plt.show()
 
-                    ax1.set_title("{0}th {1}hour BTC Price".format(j, i))
-                    plt.xlabel('minutes')
-                    plt.ylabel('price')
-                    # plt.legend(loc='best')
+    def by_stock_ratio(self):
+        df = self.save_data()
+        ndf = pd.DataFrame()
 
-                    plt.savefig('line_plot' +i+ '.png', dpi=400, bbox_inches='tight')
-                    plt.show()
+        hours = set()
+        days = set()
+        stocks = set()
+
+        for i in df["time_day"]:
+            days.add(i)
+        days = list(days)
+        days.sort()
+
+        for i in df["time_hour"]:
+            hours.add(i)
+        hours = list(hours)
+        hours.sort()
+
+        for i in df["title"]:
+            stocks.add(i)
+        stocks = list(stocks)
+
+        for i in stocks:
+            ndf[i] = i
+            ndf["ratio"] = df["ratio"][df["title"] == i])
 
 
 if __name__ == '__main__':
