@@ -66,12 +66,28 @@ class Mdproject3:
 
     def per_5m_linechart(self):
         df = self.save_data()
-        hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
-        days = []
+
+        # hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+        hours = set()
+        days = set()
+        stocks = set()
+        print(df)
+
         for i in df["time_day"]:
-            days.append(i)
-        days = list(set(days))
+            days.add(i)
+        days = list(days).sort()
         print(days)
+
+        for i in df["time_hour"]:
+            hours.add(i)
+        hours = list(hours).sort()
+        print(hours)
+
+        for i in df["title"]:
+            stocks.add(i)
+        stocks = list(stocks)
+        print(stocks)
+
         for j in days:
             for i in hours:
                 ndata = df[(df["time_hour"] == i) & (df["time_day"] == j)]
