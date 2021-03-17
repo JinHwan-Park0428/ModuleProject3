@@ -52,11 +52,11 @@ class Mdproject3:
     #     new_time_list = []
     #     for time in self.search_time_list[:5]:
     #         new_time_list.append(time.minute)
-    #     price_index = range(len(self.price_list[:5]))
+    #     price_index = range(len(self.price_list))
     #
     #     fig = plt.figure()
     #     ax1 = fig.add_subplot(1, 2, 1)
-    #     ax1.bar(price_index, self.price_list[:5], align='center', color='darkblue')
+    #     ax1.bar(price_index, self.price_list, align='center', color='darkblue')
     #     ax1.xaxis.set_ticks_position('bottom')
     #     ax1.yaxis.set_ticks_position('left')
     #     plt.xticks(price_index, new_time_list, rotation=0, fontsize='large')
