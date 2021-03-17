@@ -131,9 +131,12 @@ class Mdproject3:
             stocks.add(i)
         stocks = list(stocks)
 
+        print(df[["ratio", "title"]])
+
+
         for i in stocks:
-            ndf[i] = i
-            ndf["ratio"] = df["ratio"][df["title"] == i])
+            ndf[i+" ratio"] = df["ratio"][df["title"] == i]
+        # print(ndf)
 
 
 if __name__ == '__main__':
