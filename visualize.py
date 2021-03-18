@@ -16,8 +16,8 @@ class Mdproject3:
                                          db='mydb',
                                          charset='utf8')
         self.cursor = self.connectdb.cursor()
-        # self.save_data()
-        self.by_minute_temper()
+        # self.by_minute_temper()
+        self.temper_with_humid()
         self.cursor.close()
         self.connectdb.close()
 
@@ -58,7 +58,67 @@ class Mdproject3:
     def by_minute_temper(self):
         df = self.save_data()
 
-        # print(df)
+        hours = set()
+        days = set()
+        cities = set()
+
+        for i in df["time_day"]:
+            days.add(i)
+        days = list(days)
+        days.sort()
+
+        for i in df["time_hour"]:
+            hours.add(i)
+        hours = list(hours)
+        hours.sort()
+
+        # for i in df["title"]:
+        #     cities.add(i)
+        # cities = list(cities)
+
+        for j in days:
+            for i in hours:
+                Sdata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == "Seoul")]
+                Sdata = Sdata.reset_index(drop=True)
+                Tdata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == "Tokyo")]
+                Tdata = Tdata.reset_index(drop=True)
+                Pdata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == "Paris")]
+                Pdata = Pdata.reset_index(drop=True)
+                Ldata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == "Los Angeles")]
+                Ldata = Ldata.reset_index(drop=True)
+                Ndata = df[(df["time_hour"] == i) & (df["time_day"] == j) & (df["title"] == "New York")]
+                Ndata = Ndata.reset_index(drop=True)
+                if len(Sdata) != 0:
+                    minute_test = set()
+                    for k in Sdata["time_minute"]:
+                        minute_test.add(k)
+                    minute_test = list(minute_test)
+                    minute_test.sort()
+
+                    fig = plt.figure()
+                    ax1 = fig.add_subplot(1, 1, 1)
+                    ax1.plot(Sdata["temper"], marker=r'o', color=u'blue', linestyle='-', label= "Seoul")
+                    ax1.plot(Tdata["temper"], marker=r'o', color=u'red', linestyle='-', label= "Tokyo")
+                    ax1.plot(Pdata["temper"], marker=r'o', color=u'green', linestyle='-', label= "Paris")
+                    ax1.plot(Ndata["temper"], marker=r'o', color=u'yellow', linestyle='-', label= "New York")
+                    ax1.plot(Ldata["temper"], marker=r'o', color=u'pink', linestyle='-', label= "Los Angeles")
+                    plt.xticks(range(len(minute_test)), minute_test, rotation=0, fontsize="large")
+                    ax1.xaxis.set_ticks_position('bottom')
+                    ax1.yaxis.set_ticks_position('left')
+                    ax1.set_title("{0}th {1}hour temper".format(j, i))
+                    plt.xlabel('minutes')
+                    plt.ylabel('temper')
+                    plt.legend(loc='best')
+                    # plt.savefig("{}day {}hour cities's temp.png".format(j, i), dpi=400, bbox_inches='tight')
+                    plt.show()
+
+    def temper_with_humid(self):
+        df = self.save_data()
+        # Sdata = pd.DataFrame()
+        # Tdata = pd.DataFrame()
+        # Pdata = pd.DataFrame()
+        # Ndata = pd.DataFrame()
+        # Ldata = pd.DataFrame()
 
         hours = set()
         days = set()
@@ -77,92 +137,54 @@ class Mdproject3:
         for i in df["title"]:
             cities.add(i)
         cities = list(cities)
-        # print(cities)
 
-        # Sdata = pd.DataFrame()
-        # Pdata = pd.DataFrame()
-        # Tdata = pd.DataFrame()
-        # Ndata = pd.DataFrame()
-        # Ldata = pd.DataFrame()
+        # for i in cities:
+        #     if "Seoul" in i:
+        #         Sdata[["temper", "humid"]] = df[["temper", "humid"]][df["title"] == i]
+        #     elif "Tokyo" in i:
+        #         Tdata[["temper", "humid"]] = df[["temper", "humid"]][df["title"] == i]
+        #     elif "Paris" in i:
+        #         Pdata[["temper", "humid"]] = df[["temper", "humid"]][df["title"] == i]
+        #     elif "New York" in i:
+        #         Ndata[["temper", "humid"]] = df[["temper", "humid"]][df["title"] == i]
+        #     else :
+        #         Ldata[["temper", "humid"]] = df[["temper", "humid"]][df["title"] == i]
+
+
 
         for i in cities:
-            if "Seoul" in i:
-                Sdata = df[df["title"] == i]
-            elif "To" in i:
-                Tdata = df[df["title"] == i]
-            elif "Pa" in i:
-                Pdata = df[df["title"] == i]
-            elif "New" in i:
-                Ndata = df[df["title"] == i]
-            else :
-                Ldata = df[df["title"] == i]
+            for j in days:
+                for k in hours:
+                    ndata = df[(df["time_hour"] == k) & (df["time_day"] == j) & (df["title"] == i)]
+                    ndata.reset_index(drop=True)
+                    if len(ndata) != 0:
+                        minute_test = set()
+                        for h in ndata["time_minute"]:
+                            minute_test.add(h)
+                        minute_test = list(minute_test)
+                        minute_test.sort()
 
-        Sdata = Sdata.reset_index(drop=True)
-        Tdata = Tdata.reset_index(drop=True)
-        Pdata = Pdata.reset_index(drop=True)
-        Ndata = Ndata.reset_index(drop=True)
-        Ldata = Ldata.reset_index(drop=True)
-        print(Sdata)
+                        fig, ax1 = plt.subplots()
 
+                        color = 'tab:red'
+                        ax1.set_xlabel('time flow')
+                        ax1.set_ylabel('temper', color=color)
+                        ax1.plot(range(len(ndata["temper"])), ndata["temper"], marker=r'*', linestyle="-", color=color)
+                        ax1.tick_params(axis='y', labelcolor=color)
+                        plt.xticks(range(len(ndata["temper"])), range(len(ndata["temper"])), rotation=0, fontsize="large")
+                        ax1.set_title("{} {}day {}hour temper with humid".format(i, j, k))
 
-        # for k in cities:
-        for j in days:
-            for i in hours:
-                fig = plt.figure()
-                ax1 = fig.add_subplot(1, 1, 1)
-                ax1.plot(Sdata[(Sdata["time_hour"] == i) & (Sdata["time_day"] == j)]["temper"], marker=r'o', color=u'blue', linestyle='-', label= "Seoul")
-                ax1.plot(Tdata[(Tdata["time_hour"] == i) & (Tdata["time_day"] == j)]["temper"], marker=r'o', color=u'red', linestyle='-', label= "Tokyo")
-                ax1.plot(Pdata[(Pdata["time_hour"] == i) & (Pdata["time_day"] == j)]["temper"], marker=r'o', color=u'green', linestyle='-', label= "Paris")
-                ax1.plot(Ndata[(Ndata["time_hour"] == i) & (Ndata["time_day"] == j)]["temper"], marker=r'o', color=u'yellow', linestyle='-', label= "New York")
-                ax1.plot(Ldata[(Ldata["time_hour"] == i) & (Ldata["time_day"] == j)]["temper"], marker=r'o', color=u'pink', linestyle='-', label= "Los Angeles")
-                plt.xticks(range(len(Sdata[Sdata["time_hour"]==i]["time_minute"])), Sdata[Sdata["time_hour"]==i]["time_minute"], rotation=0, fontsize="large")
-                ax1.xaxis.set_ticks_position('bottom')
-                ax1.yaxis.set_ticks_position('left')
-                ax1.set_title("{0}th {1}hour temper".format(j, i))
-                plt.xlabel('minutes')
-                plt.ylabel('temper')
-                plt.legend(loc='best')
-                # plt.savefig(k+'price'+j+'day'+i+'hour price.png', dpi=400, bbox_inches='tight')
-                plt.show()
+                        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
-    def by_stock_ratio(self):
-        df = self.save_data()
-        Bdf = pd.DataFrame()
-        Edf = pd.DataFrame()
-        Ldf = pd.DataFrame()
-        stocks = set()
+                        color = 'tab:blue'
+                        ax2.set_ylabel('humid', color=color)  # we already handled the x-label with ax1
+                        ax2.plot(range(len(ndata["temper"])), ndata["humid"], marker=r'o', linestyle='-', color=color)
+                        # ax1.bar(range(len(ndata["time_minute"])), ndata["humid"], align='center', color='darkblue', alpha=0.5, width=0.5)
+                        ax2.set_ylim(bottom=0, top=100)
+                        ax2.tick_params(axis='y', labelcolor=color)
 
-        for i in df["title"]:
-            stocks.add(i)
-        stocks = list(stocks)
-
-        for i in stocks:
-            if "Bitcoin" in i:
-                Bdf["ratio"] = df["ratio"][df["title"] == i]
-            elif "Litecoin" in i:
-                Ldf["ratio"] = df["ratio"][df["title"] == i]
-            else:
-                Edf["ratio"] = df["ratio"][df["title"] == i]
-
-        Bdf["ratio"] = Bdf["ratio"].map(lambda x: self.ratio_parse(x))
-        Ldf["ratio"] = Ldf["ratio"].map(lambda x: self.ratio_parse(x))
-        Edf["ratio"] = Edf["ratio"].map(lambda x: self.ratio_parse(x))
-
-        fig = plt.figure()
-        ax1 = fig.add_subplot(1, 1, 1)
-        ax1.plot(Bdf["ratio"], marker=r'o', color=u'blue', linestyle='-', label='Bitcoin')
-        ax1.plot(Ldf["ratio"], marker=r'+', color=u'red', linestyle='--', label='Litecoin')
-        ax1.plot(Edf["ratio"], marker=r'*', color=u'green', linestyle='-.', label='Ethereum')
-        plt.yticks(np.arange(-10.0, 10.0, 2.0))
-        ax1.xaxis.set_ticks_position('bottom')
-        ax1.yaxis.set_ticks_position('left')
-        ax1.set_title("Rate by cryptocurrency")
-        plt.xlabel('Data volume')
-        plt.ylabel('Ratio')
-        plt.legend(loc='best')
-        plt.savefig('crypto_ratio_plot.png', dpi=400, bbox_inches='tight')
-        plt.show()
-
+                        fig.tight_layout()  # otherwise the right y-label is slightly clipped
+                        plt.show()
 
 if __name__ == '__main__':
     Mdproject3()
