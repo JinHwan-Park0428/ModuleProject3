@@ -160,6 +160,7 @@ class Mdproject3:
                         ax2.plot(range(len(ndata["temper"])), ndata["humid"], marker=r'o', linestyle='-', color=color)
                         ax2.set_ylim(bottom=0, top=100)
                         ax2.tick_params(axis='y', labelcolor=color)
+
                         fig.tight_layout()
                         plt.savefig("{}day {}hour cities's temwhum.png".format(j, i), dpi=400, bbox_inches='tight')
                         plt.show()
