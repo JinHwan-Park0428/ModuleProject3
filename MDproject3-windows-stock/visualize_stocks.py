@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
+import time
 
 plt.style.use('ggplot')
 
@@ -40,7 +41,7 @@ class Mdproject3:
         show_db = '''SELECT * FROM my_project_stock'''
         self.cursor.execute(show_db)
         data = self.cursor.fetchall()
-        pddata = pd.DataFrame(data, columns=["quantity", "price", "days_range", "title", "open_price", "ratio", "search_time"])
+        pddata = pd.DataFrame(data, columns=["quantity", "price", "days_range", "title", "open_price", "ratio", "search_time", "id"])
         pddata["search_time"] = pddata["search_time"].map(lambda x: self.newtime(x))
         pddata["time_day"] = pddata["search_time"].map(lambda x: self.time_day(x))
         pddata["time_hour"] = pddata["search_time"].map(lambda x: self.time_hour(x))
@@ -49,6 +50,14 @@ class Mdproject3:
 
     def by_stock_price(self):
         df = self.save_data()
+        deleteSql = """TRUNCATE savestockprice"""
+        try:
+            time.sleep(1)
+            self.cursor.execute(deleteSql)
+            print("제거 완료")
+            self.connectdb.commit()
+        except Exception as e:
+            print(e)
 
         hours = set()
         days = set()
@@ -85,10 +94,29 @@ class Mdproject3:
                         plt.ylabel('price')
                         plt.legend(loc='best')
                         plt.savefig(k+'price'+j+'day'+i+'hour price.png', dpi=400, bbox_inches='tight')
+                        savepath = '/static/'+k+'price'+j+'day'+i+'hour price.png'
+                        insertSql = 'INSERT INTO savestockprice(stock_title, time_day, time_hour, savepath) VALUES(%s, %s, %s, %s)'
+                        try:
+                            time.sleep(1)
+                            self.cursor.execute(insertSql, (k, j, i, savepath))
+                            print("데이터 추가 완료")
+                            self.connectdb.commit()
+                        except Exception as e:
+                            print(e)
                         plt.show()
 
     def by_stock_ratio(self):
         df = self.save_data()
+
+        deleteSql = """TRUNCATE savestockratio"""
+        try:
+            time.sleep(1)
+            self.cursor.execute(deleteSql)
+            print("제거 완료")
+            self.connectdb.commit()
+        except Exception as e:
+            print(e)
+
         Bdf = pd.DataFrame()
         Edf = pd.DataFrame()
         Ldf = pd.DataFrame()
@@ -122,6 +150,15 @@ class Mdproject3:
         plt.ylabel('ratio')
         plt.legend(loc='best')
         plt.savefig('crypto_ratio_plot.png', dpi=400, bbox_inches='tight')
+        savepath = '/static/crypto_ratio_plot.png'
+        insertSql = """INSERT INTO savestockratio(datacount, savepath) VALUES(%s, %s)"""
+        try:
+            time.sleep(1)
+            self.cursor.execute(insertSql, (str(len(Bdf)), savepath))
+            print("데이터 추가")
+            self.connectdb.commit()
+        except Exception as e:
+            print(e)
         plt.show()
 
 
