@@ -22,6 +22,8 @@ from module.moduleapi import views
 router = routers.DefaultRouter()
 router.register(r'MyProjectStock', views.MyProjectStockViewSet)
 router.register(r'MyProjectWeather', views.MyProjectWeatherViewSet)
+router.register(r'Savestockprice', views.SavestockpriceViewSet)
+router.register(r'Savestockratio', views.SavestockratioViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
