@@ -17,7 +17,7 @@ class Mdproject3:
                                          db='mydb',
                                          charset='utf8')
         self.cursor = self.connectdb.cursor()
-        self.by_stock_price()
+        # self.by_stock_price()
         self.by_stock_ratio()
         self.cursor.close()
         self.connectdb.close()
@@ -151,10 +151,10 @@ class Mdproject3:
         plt.legend(loc='best')
         plt.savefig('crypto_ratio_plot.png', dpi=400, bbox_inches='tight')
         savepath = '/static/crypto_ratio_plot.png'
-        insertSql = """INSERT INTO savestockratio(datacount, savepath) VALUES(%s, %s)"""
+        insertSql = """INSERT INTO savestockratio(datacount, savepath, search_key) VALUES(%s, %s, %s)"""
         try:
             time.sleep(1)
-            self.cursor.execute(insertSql, (str(len(Bdf)), savepath))
+            self.cursor.execute(insertSql, (str(len(df)), savepath, "ratio"))
             print("데이터 추가")
             self.connectdb.commit()
         except Exception as e:

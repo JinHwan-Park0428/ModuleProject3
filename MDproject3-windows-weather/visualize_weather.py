@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
+import time
 
 plt.style.use('ggplot')
 
@@ -46,7 +47,7 @@ class Mdproject3:
         self.cursor.execute(show_db)
         data = self.cursor.fetchall()
         pddata = pd.DataFrame(data, columns=["temper", "humid", "high_temp", "low_temp", "title", "wind", "weather",
-                                             "search_time"])
+                                             "search_time", "id"])
         pddata["search_time"] = pddata["search_time"].map(lambda x: self.newtime(x))
         pddata["time_day"] = pddata["search_time"].map(lambda x: self.time_day(x))
         pddata["time_hour"] = pddata["search_time"].map(lambda x: self.time_hour(x))
@@ -59,6 +60,15 @@ class Mdproject3:
 
     def by_minute_temper(self):
         df = self.save_data()
+
+        deleteSql = """TRUNCATE saveweathertemp"""
+        try:
+            time.sleep(1)
+            self.cursor.execute(deleteSql)
+            print("제거 완료")
+            self.connectdb.commit()
+        except Exception as e:
+            print(e)
 
         hours = set()
         days = set()
@@ -108,10 +118,28 @@ class Mdproject3:
                     plt.ylabel('temper')
                     plt.legend(loc='best')
                     plt.savefig("{}day {}hour cities's temper.png".format(j, i), dpi=400, bbox_inches='tight')
+                    savepath = '/static/'+"{}day {}hour cities's temper.png".format(j, i)
+                    insertSql = 'INSERT INTO saveweathertemp(time_day, time_hour, savepath) VALUES(%s, %s, %s)'
+                    try:
+                        time.sleep(1)
+                        self.cursor.execute(insertSql, (j, i, savepath))
+                        print("데이터 추가 완료")
+                        self.connectdb.commit()
+                    except Exception as e:
+                        print(e)
                     plt.show()
 
     def temper_with_humid(self):
         df = self.save_data()
+
+        deleteSql = """TRUNCATE saveweathertempwithhumid"""
+        try:
+            time.sleep(1)
+            self.cursor.execute(deleteSql)
+            print("제거 완료")
+            self.connectdb.commit()
+        except Exception as e:
+            print(e)
 
         hours = set()
         days = set()
@@ -160,9 +188,17 @@ class Mdproject3:
                         ax2.plot(range(len(ndata["temper"])), ndata["humid"], marker=r'o', linestyle='-', color=color)
                         ax2.set_ylim(bottom=0, top=100)
                         ax2.tick_params(axis='y', labelcolor=color)
-
                         fig.tight_layout()
-                        plt.savefig("{}day {}hour cities's temwhum.png".format(j, i), dpi=400, bbox_inches='tight')
+                        plt.savefig("{}day {}hour cities's temwhum.png".format(j, k), dpi=400, bbox_inches='tight')
+                        savepath = '/static/'+"{}day {}hour cities's temwhum.png".format(j, k)
+                        insertSql = 'INSERT INTO saveweathertempwithhumid(title, time_day, time_hour, savepath) VALUES(%s, %s, %s, %s)'
+                        try:
+                            time.sleep(1)
+                            self.cursor.execute(insertSql, (i, j, k, savepath))
+                            print("데이터 추가 완료")
+                            self.connectdb.commit()
+                        except Exception as e:
+                            print(e)
                         plt.show()
 
 
