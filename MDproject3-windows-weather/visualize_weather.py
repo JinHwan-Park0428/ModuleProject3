@@ -104,7 +104,7 @@ class Mdproject3:
                     ax1.xaxis.set_ticks_position('bottom')
                     ax1.yaxis.set_ticks_position('left')
                     ax1.set_title("{0}th {1}hour temper".format(j, i))
-                    plt.xlabel('time flow==>')
+                    plt.xlabel('data count')
                     plt.ylabel('temper')
                     plt.legend(loc='best')
                     plt.savefig("{}day {}hour cities's temper.png".format(j, i), dpi=400, bbox_inches='tight')
@@ -146,7 +146,7 @@ class Mdproject3:
                         fig, ax1 = plt.subplots()
 
                         color = 'tab:red'
-                        ax1.set_xlabel('time flow==>')
+                        ax1.set_xlabel('data count')
                         ax1.set_ylabel('temper', color=color)
                         ax1.plot(range(len(ndata["temper"])), ndata["temper"], marker=r'*', linestyle="-", color=color)
                         ax1.tick_params(axis='y', labelcolor=color)
