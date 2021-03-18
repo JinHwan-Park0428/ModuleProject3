@@ -81,7 +81,7 @@ class Mdproject3:
                         ax1.xaxis.set_ticks_position('bottom')
                         ax1.yaxis.set_ticks_position('left')
                         ax1.set_title("{0}th {1}hour {2} Price".format(j, i, k))
-                        plt.xlabel('minutes')
+                        plt.xlabel('time flow==>')
                         plt.ylabel('price')
                         plt.legend(loc='best')
                         plt.savefig(k+'price'+j+'day'+i+'hour price.png', dpi=400, bbox_inches='tight')
