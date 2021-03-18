@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework import permissions
-from module.moduleapi.models import MyProjectStock, MyProjectWeather, Savestockprice, Savestockratio
-from module.moduleapi.serializers import MyProjectStockSerializer, MyProjectWeatherSerializer, SavestockpriceSerializer, SavestockratioSerializer
+from module.moduleapi.models import MyProjectStock, MyProjectWeather, Savestockprice, Savestockratio, Saveweathertemp, Saveweathertempwithhumid
+from module.moduleapi.serializers import MyProjectStockSerializer, MyProjectWeatherSerializer, SavestockpriceSerializer, SavestockratioSerializer, SaveweathertempSerializer, SaveweathertempwithhumidSerializer
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -59,6 +59,27 @@ class SavestockpriceViewSet(viewsets.ModelViewSet):
     serializer_class = SavestockpriceSerializer
 
     permission_classes = [permissions.IsAuthenticated]
+
+class SaveWeathertempViewSet(viewsets.ModelViewSet):
+    queryset = Saveweathertemp.objects.all()
+    serializer_class = SaveweathertempSerializer
+
+    permission_classes = [permissions.IsAuthenticated]
+
+class SaveWeathertempwithhumidViewSet(viewsets.ModelViewSet):
+    queryset = Saveweathertempwithhumid.objects.all()
+    serializer_class = SaveweathertempwithhumidSerializer
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['GET'])
+    def search(self, request):
+        q = request.query_params.get('q', None) 
+
+        qs = self.get_queryset().filter(stock_title=q)
+        serializer = self.get_serializer(qs, many=True)
+        
+        return Response(serializer.data)
 
     # @action(detail=False, methods=['GET'])
     # def search(self, request):

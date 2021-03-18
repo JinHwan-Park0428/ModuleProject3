@@ -1,4 +1,4 @@
-from module.moduleapi.models import MyProjectStock, MyProjectWeather, Savestockratio, Savestockprice
+from module.moduleapi.models import MyProjectStock, MyProjectWeather, Savestockratio, Savestockprice, Saveweathertemp, Saveweathertempwithhumid
 from rest_framework import serializers
 
 class MyProjectStockSerializer(serializers.ModelSerializer):
@@ -20,3 +20,14 @@ class SavestockratioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Savestockratio
         fields = ['datacount','savepath','search_key']
+
+class SaveweathertempSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Saveweathertemp
+        fields = ['time_day','time_hour','savepath']
+
+class SaveweathertempwithhumidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Saveweathertempwithhumid
+        fields = ['title','time_day','time_hour','savepath']
+        

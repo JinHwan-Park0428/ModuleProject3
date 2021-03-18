@@ -73,6 +73,26 @@ class Savestockratio(models.Model):
         managed = False
         db_table = 'savestockratio'
 
+class Saveweathertemp(models.Model):
+    time_day = models.IntegerField()
+    time_hour = models.IntegerField()
+    savepath = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'saveweathertemp'
+
+
+class Saveweathertempwithhumid(models.Model):
+    title = models.CharField(max_length=50)
+    time_day = models.IntegerField()
+    time_hour = models.IntegerField()
+    savepath = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'saveweathertempwithhumid'
+        
 class Stock(models.Model):
     quantity = models.IntegerField()
     price = models.FloatField()

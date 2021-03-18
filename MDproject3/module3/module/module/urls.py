@@ -24,6 +24,8 @@ router.register(r'MyProjectStock', views.MyProjectStockViewSet)
 router.register(r'MyProjectWeather', views.MyProjectWeatherViewSet)
 router.register(r'Savestockprice', views.SavestockpriceViewSet)
 router.register(r'Savestockratio', views.SavestockratioViewSet)
+router.register(r'Saveweathertemp', views.SaveWeathertempViewSet)
+router.register(r'Saveweathertempwithhumid', views.SaveWeathertempwithhumidViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
