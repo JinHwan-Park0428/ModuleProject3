@@ -14,14 +14,14 @@ class MyProjectStockViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     # /my_topic_MyProjectWeather/search?q=test5
-    # @action(detail=False, methods=['GET'])
-    # def search(self, request):
-    #     q = request.query_params.get('q', None) 
+    @action(detail=False, methods=['GET'])
+    def search(self, request):
+        q = request.query_params.get('q', None) 
 
-    #     qs = self.get_queryset().filter(user_id=q)
-    #     serializer = self.get_serializer(qs, many=True)
+        qs = self.get_queryset().filter(title=q)
+        serializer = self.get_serializer(qs, many=True)
         
-    #     return Response(serializer.data)
+        return Response(serializer.data)
 
 
 class MyProjectWeatherViewSet(viewsets.ModelViewSet):
@@ -29,3 +29,14 @@ class MyProjectWeatherViewSet(viewsets.ModelViewSet):
     serializer_class = MyProjectWeatherSerializer
 
     permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['GET'])
+    def search(self, request):
+        q = request.query_params.get('q', None) 
+
+        qs = self.get_queryset().filter(title=q)
+        serializer = self.get_serializer(qs, many=True)
+        
+        return Response(serializer.data)
+
+    
