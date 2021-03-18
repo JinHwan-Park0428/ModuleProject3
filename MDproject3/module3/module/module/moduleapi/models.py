@@ -53,6 +53,25 @@ class MyProjectWeather(models.Model):
         managed = False
         db_table = 'my_project_weather'
 
+class Savestockprice(models.Model):
+    stock_title = models.CharField(max_length=50)
+    time_day = models.IntegerField()
+    time_hour = models.IntegerField()
+    savepath = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'savestockprice'
+
+
+class Savestockratio(models.Model):
+    datacount = models.IntegerField()
+    savepath = models.CharField(max_length=100)
+    search_key = models.CharField(max_length=10)
+
+    class Meta:
+        managed = False
+        db_table = 'savestockratio'
 
 class Stock(models.Model):
     quantity = models.IntegerField()
