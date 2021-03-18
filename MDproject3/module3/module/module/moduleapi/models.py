@@ -1,0 +1,83 @@
+from django.db import models
+
+# Create your models here.
+class Md3Stock(models.Model):
+    quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
+    price = models.FloatField()
+    days_range = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
+    search_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'md3stock'
+
+
+class MyProjectMd3Stock(models.Model):
+    quantity = models.BigIntegerField(db_column='Quantity')  # Field name made lowercase.
+    price = models.FloatField()
+    days_range = models.TextField()
+    title = models.TextField()
+    search_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'my_project_md3stock'
+
+
+class MyProjectStock(models.Model):
+    quantity = models.BigIntegerField()
+    price = models.FloatField()
+    days_range = models.TextField()
+    title = models.TextField()
+    open_price = models.FloatField()
+    ratio = models.TextField()
+    search_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'my_project_stock'
+
+
+class MyProjectWeather(models.Model):
+    temper = models.IntegerField()
+    humid = models.TextField()
+    high_temp = models.IntegerField()
+    low_temp = models.IntegerField()
+    title = models.TextField()
+    wind = models.TextField()
+    weather = models.TextField()
+    search_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'my_project_weather'
+
+
+class Stock(models.Model):
+    quantity = models.IntegerField()
+    price = models.FloatField()
+    days_range = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
+    open_price = models.FloatField()
+    ratio = models.CharField(max_length=10)
+    search_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'stock'
+
+
+class Weather(models.Model):
+    temper = models.IntegerField()
+    humid = models.CharField(max_length=10)
+    high_temp = models.IntegerField()
+    low_temp = models.IntegerField()
+    title = models.CharField(max_length=20)
+    wind = models.CharField(max_length=10)
+    weather = models.CharField(max_length=20)
+    search_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'weather'
