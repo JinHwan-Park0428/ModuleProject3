@@ -11,22 +11,6 @@ class StockbotsSpider(scrapy.Spider):
                   'https://finance.yahoo.com/quote/ETH-USD?p=ETH-USD&.tsrc=fin-srch',
                   'https://finance.yahoo.com/quote/LTC-USD?p=LTC-USD&.tsrc=fin-srch']
 
-    # def parse(self, response):
-    #     Quantity = response.xpath('//*[@id="quote-summary"]/div[2]/table/tbody/tr[4]/td[2]/span/text()').extract()
-    #     Price = response.xpath('//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]/text()').extract()
-    #     days_range = response.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/text()').extract()
-    #     title = response.xpath('//*[@id="quote-header-info"]/div[2]/div[1]/div[1]/h1/text()').extract()
-    #
-    #
-    #     for row in zip(Quantity, Price, days_range,  title):
-    #         item = StockscraperItem()
-    #         item['Quantity'] = row[0]
-    #         item['Price'] = row[1]
-    #         item['days_range'] = row[2]
-    #         item['title'] = row[3]
-    #
-    #         yield item
-#     open_price = 시작가 , ratio = 시작가와 현재가의 차이 ( 가격변동률 )
     def parse(self, response):
         quantity = response.xpath('//*[@id="quote-summary"]/div[2]/table/tbody/tr[4]/td[2]/span/text()').extract()
         Price = response.xpath('//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]/text()').extract()
