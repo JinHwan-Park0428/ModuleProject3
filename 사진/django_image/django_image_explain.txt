@@ -1,0 +1,6 @@
+django 	main : djagno 접속시 화면
+	MyProject ~ : DB에 있는 모든 값 json 형식으로 표현
+	Save ~ : image 파일이 담겨있는 경로표현
+	image : Save~ json에 포함된 해당 주소 ( ex)static/~로 접근 시 이미지 표현 )
+
+django_STATIC -> image를 표현해주기위해 STATIC 폴더를 생성하고 경로지정해주는 코드

@@ -1,0 +1,5 @@
+주소 : jinhwan-instance.cn73pxf4sggf.us-west-2.rds.amazonaws.com
+
+계정 : admin
+
+비밀번호 : 1q2w3e4r5t
